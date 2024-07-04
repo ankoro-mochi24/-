@@ -1,0 +1,13 @@
+Railsガイドを読んで
+・読んだページ：31ｐ～
+
+【ためになったこと】
+<details>
+　<summary>・キーワード引数</summary>
+
+『def メソッド名(引数1: true, 引数2:true)』のようにすることで、メソッド呼び出しの際に引数を渡さなくても
+デフォルトで
+</details>
+・オーバーライドとsuper
+・.map{|変数名| }
+・rails g scaffold
