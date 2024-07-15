@@ -11,7 +11,7 @@
 
 ___
 
-# よく使うコードなどまとめ
+# よく使うコードまとめ
 ※CSRF攻撃対策（とりあえず書いといたほうがいい）
 ```
 # app\controllers\application_controller.rb
