@@ -4,22 +4,20 @@
 └bundle install（dockerを使っている場合はdokcer compose run web bashのを先に実行）  
 └rails g devise:install  
 └rails g devise User  
-(nameカラムなどを追加したい場合は生成されたmigrationファイルに追記)  
+2.5、nameカラムなどを追加したい場合は生成されたmigrationファイルに追記  
 └rails db:migrate  
 3、rails g devise:views  
  **※ログインに関するビューが自動生成されるが、form_forを使っているビューがあるので、form_withに変更したほうがよい(24/07/15現在)**
+
+___
 
 # よく使うコードなどまとめ
 ※CSRF攻撃対策（とりあえず書いといたほうがいい）
 ```
 # app\controllers\application_controller.rb
-class ApplicationController < ActionController::Base
-  # ここから
   protect_from_forgery with: :exception # CSRF攻撃からアプリケーションを保護するためのメソッド
-  # ここまで
 ```
-
-
+___
 ※カラム追加コード例(nameカラム)  
 1、マイグレーションファイルに追加したいカラム情報を追記
 ```
@@ -38,7 +36,8 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller? #
 
   def configure_permitted_parameters #
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:name]) # 新規登録時(sign_up時)にnameというキーのパラメーターを追加で許可する
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:name]) # サインアップ時にnameパラメータを許可
+    devise_parameter_sanitizer.permit(:account_update, keys: [:name]) # アカウント更新時にnameパラメータを許可
   end
 end
 ```
@@ -54,7 +53,12 @@ end
   </div>
 ...
 ```
-
+4、modelにバリデーションを追加
+```
+#app\models\user.rb
+  validates :name, presence: true
+```
+___
 ※ログインリンク/ログアウト/新規登録のテンプレート  
 ```
 <% if user_signed_in? %>
