@@ -4,7 +4,7 @@
 └bundle install（dockerを使っている場合はdokcer compose run web bashのを先に実行）  
 └rails g devise:install  
 └rails g devise User  
-2.5、nameカラムなどを追加したい場合は生成されたmigrationファイルに追記  
+(nameカラムなどを追加したい場合は生成されたmigrationファイルに追記)  
 └rails db:migrate  
 3、rails g devise:views  
  **※ログインに関するビューが自動生成されるが、form_forを使っているビューがあるので、form_withに変更したほうがよい(24/07/15現在)**
