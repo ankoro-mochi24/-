@@ -15,6 +15,7 @@ ___
 ※CSRF攻撃対策（とりあえず書いといたほうがいい）
 ```
 # app\controllers\application_controller.rb
+class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception # CSRF攻撃からアプリケーションを保護するためのメソッド
 ```
 ___
@@ -27,7 +28,7 @@ ___
       t.string :name, null: false, default: "" # nameカラムを追加
     end
 ```
-2、applicationコントローラーにてdbへの保存を許可するコードを追記（**このように既述しないと、Deviceに自動で保存をはじかれてしまう**）
+2、dbへの保存/更新を許可するコードを追記（**このように既述しないと、Deviceに自動で保存をはじかれてしまう**）
 ```
 # app\controllers\application_controller.rb
 class ApplicationController < ActionController::Base
