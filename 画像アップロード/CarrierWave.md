@@ -106,7 +106,7 @@ class ImageUploader < CarrierWave::Uploader::Base
   # ファイルが空のディレクトリを自動削除
   def delete_empty_upstream_dirs
     path = ::File.expand_path(store_dir, root)
-    Dir.delete(path) if Dir.empty?(path) # 空のディレクトリが存在する場合のみ削除
+    Dir.delete(path) if Dir.exist?(path) && Dir.empty?(path) # 空のディレクトリが存在する場合のみ削除
   rescue SystemCallError
     true
   end
