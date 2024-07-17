@@ -75,6 +75,11 @@ ___
 ```
 class ImageUploader < CarrierWave::Uploader::Base
   before :remove, :delete_empty_upstream_dirs
+
+  # 画像へのアクセスをアップロード者と管理者に制限
+  permissions 0600
+  directory_permissions 0700
+
   storage :file
 
   def store_dir
@@ -91,7 +96,6 @@ class ImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
-  # 画像へのアクセスをアップロード者と管理者に制限
   def set_permissions
     self.permissions = 0600
     self.directory_permissions = 0700
