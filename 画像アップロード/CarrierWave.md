@@ -96,11 +96,6 @@ class ImageUploader < CarrierWave::Uploader::Base
     %w(jpg jpeg gif png)
   end
 
-  def set_permissions
-    self.permissions = 0600
-    self.directory_permissions = 0700
-  end
-
   # ファイルの衝突回避
   # 一意のファイル名を生成する
   def filename
