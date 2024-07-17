@@ -32,10 +32,91 @@ mount_uploaderとmount_uploadersのテーブルイメージ
 |-----|-----------------|--------------------|--------------------|
 | 1   | ["a.jpg", "b.jpg"] | 2024-07-17 10:00:00 | 2024-07-17 10:00:00 |
 
-5、
-6、
-7、
-8、
-9、
-10、
-11、
+**※SQLiteを使用する場合はモデルファイルに『serialize :avatars, JSON』と記述が必要**  
+5、画像のアップロードフォームを用意  
+【mount_uploaderの場合】
+```
+# ビューファイル
+<%= form_with model: [@変数名], local: true, html: { multipart: true } do |form| %>
+  <p>
+    <%= form.label :[カラム名], "画像" %>
+    <%= form.file_field :[カラム名] %>
+  </p>
+  <p>
+    <%= form.submit "Save" %>
+  </p>
+<% end %>
+
+# コントローラー
+# ストロングパラメーター
+params.require(:[ルートキー]).permit(:[カラム名1], :[カラム名2], :[画像カラム名])
+```
+【mount_uploadersの場合】
+```
+# ビューファイル
+# <%= form.file_field :[カラム名], multiple: true %>と記述が必要
+<%= form_with model: [@変数名], local: true, html: { multipart: true } do |form| %>
+  <p>
+    <%= form.label :[カラム名], "画像" %>
+    <%= form.file_field :[カラム名], multiple: true %>
+  </p>
+  <p>
+    <%= form.submit "Save" %>
+  </p>
+<% end %>
+
+# コントローラー
+# ストロングパラメーター
+params.require(:[ルートキー]).permit(:[カラム名1], :[カラム名2], {[画像カラム名]: []})
+```
+
+___
+# 必ずしておいたほうがいい設定  
+```
+class ImageUploader < CarrierWave::Uploader::Base
+  before :remove, :delete_empty_upstream_dirs
+  storage :file
+
+  def store_dir
+    "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
+  end
+
+  #ファイルサイズ制限による不正アップロードの防止
+  def size_range
+    1..5.megabytes
+  end
+
+  # 拡張子の限定によるセキュリティ対策
+  def extension_allowlist
+    %w(jpg jpeg gif png)
+  end
+
+  # 画像へのアクセスをアップロード者と管理者に制限
+  def set_permissions
+    self.permissions = 0600
+    self.directory_permissions = 0700
+  end
+
+  # ファイルの衝突回避
+  # 一意のファイル名を生成する
+  def filename
+    "#{secure_token}.#{file.extension}"
+  end
+
+  # ファイルが空のディレクトリを自動削除
+  def delete_empty_upstream_dirs
+    path = ::File.expand_path(store_dir, root)
+    Dir.delete(path) if Dir.empty?(path) # 空のディレクトリが存在する場合のみ削除
+  rescue SystemCallError
+    true
+  end
+
+  protected
+
+  # 一意のトークンを生成するメソッド
+  def secure_token
+    model.instance_variable_get("@#{mounted_as}_secure_token") || model.instance_variable_set("@#{mounted_as}_secure_token", SecureRandom.uuid)
+  end
+
+end
+```
