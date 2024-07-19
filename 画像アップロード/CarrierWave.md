@@ -116,6 +116,5 @@ class ImageUploader < CarrierWave::Uploader::Base
   def secure_token
     model.instance_variable_get("@#{mounted_as}_secure_token") || model.instance_variable_set("@#{mounted_as}_secure_token", SecureRandom.uuid)
   end
-
 end
 ```
