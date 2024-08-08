@@ -1,3 +1,5 @@
+※前提条件：dockerデスクトップの利用
+
 1、Gemfileに必要なgemを記載しインストール
 ```
 gem 'searchkick'               # 検索
@@ -36,7 +38,7 @@ docker-compose run web rails searchkick:reindex
 class ArticlesController < ApplicationController
   def index
     if params[:query].present?
-      @articles = Article.search(params[:query])
+      @articles = Article.search(params[:query]) # .serch = Searchkick gemのメソッド
     else
       @articles = Article.all
     end
@@ -73,4 +75,95 @@ class Article < ApplicationRecord
     }
   end
 end
+```
+
+
+※関連知識
+1.Searchkick設定メソッド  
+1.1. search  
+最も基本的なメソッドで、検索を実行します。
+```
+# 全てのフィールドで検索
+Article.search("keyword")
+
+# 特定のフィールドで検索
+Article.search("keyword", fields: [:title])
+```
+1.2. reindex  
+データを再インデックスするために使用します。
+```
+# 単一のモデルを再インデックス
+Article.reindex
+
+# 全てのモデルを再インデックス
+Searchkick.reindex_all
+```
+  
+2. Searchkick設定オプション  
+2.1. word_start
+部分一致検索を可能にします。特にオートコンプリートに便利です。
+```
+class Article < ApplicationRecord
+  searchkick word_start: [:title]
+end
+
+# 検索
+Article.search("key", fields: [:title], match: :word_start)
+```
+2.2. suggest  
+検索候補を提供するために使用します。
+```
+class Article < ApplicationRecord
+  searchkick suggest: [:title]
+end
+
+# 検索
+Article.search("titl", suggest: true).suggestions
+```
+2.3. highlight  
+検索結果のハイライト表示を可能にします。
+```
+class Article < ApplicationRecord
+  searchkick highlight: [:title, :body]
+end
+
+# 検索
+results = Article.search("keyword", fields: [:title, :body], highlight: true)
+
+results.each do |result|
+  puts result.highlight["title"]
+  puts result.highlight["body"]
+end
+```
+3. その他の便利なメソッド  
+3.1. similar  
+類似したドキュメントを検索するために使用します。
+```
+article = Article.find(1)
+similar_articles = article.similar(fields: [:title, :body])
+```
+3.2. searchkick_index  
+カスタムインデックス名を使用する場合に便利です。
+```
+class Article < ApplicationRecord
+  searchkick index_name: "custom_articles_index"
+end
+```
+4. クエリの詳細設定  
+4.1. boost  
+特定のフィールドの重要度を高めるために使用します。
+```
+Article.search("keyword", fields: [{title: :boost}], boost_by: [:popularity])
+```
+4.2. where
+特定の条件で絞り込み検索を行うために使用します。
+```
+Article.search("keyword", where: {published: true})
+```
+
+
+※関連gem
+```
+gem 'elasticsearch-model'
+gem 'elasticsearch-rails'
 ```
