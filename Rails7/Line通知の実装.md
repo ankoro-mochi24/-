@@ -11,3 +11,17 @@ LINE_NOTIFY_TOKEN=先ほどコピーしたトークン
 ```
 .env
 ```
+6.必要なgemの追加
+【GEMFILE】
+```
+gem 'httparty'
+
+group :development, :test do
+  gem 'dotenv-rails'
+  gem "debug", platforms: %i[ mri mingw x64_mingw ]
+end
+```
+【コマンド】
+```
+docker compose run web bundle
+```
