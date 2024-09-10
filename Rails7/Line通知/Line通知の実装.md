@@ -1,9 +1,7 @@
 ### 目次：  
-・必要なファイルを作成＆記述
+・必要なファイルを作成＆記述  
 ・LINE Notifyにサービスの登録  
-・LINE_NOTIFY_CLIENT_SECRETのコピペ  
-・LINE_NOTIFY_REDIRECT_URIの設定  
-・LINE_NOTIFY_CLIENT_IDの発行とコピペ  
+・【.env】の編集  
 
 # 必要なファイルを作成＆記述
 【.env】
@@ -60,5 +58,9 @@ ngrok http 3000
 └コンピュータを再起動する  
 ※※リアルタイム保護を一時的に停止していた場合は必ず作業終了後に停止を解除すること！！※※
 
-# LINE_NOTIFY_CLIENT_SECRETのコピペ
-# LINE_NOTIFY_CLIENT_IDの発行とコピペ  
+# 【.env】の編集  
+1.登録したサービスを開く  
+![image](https://github.com/user-attachments/assets/e7711fbb-0aa9-4952-918e-4bc3282d84d6)
+2.サービスのページ上から[CLIENT_ID]、[CLIENT_SECRET]、[REDIRECT_URI]を確認し、【.env】に転記
+![image](https://i.gyazo.com/4060fd34964a1025f34457487872bcf0.png)
+![image](https://i.gyazo.com/4853fc43ced4ab21e291587839af0749.png)
