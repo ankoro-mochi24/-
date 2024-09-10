@@ -1,24 +1,18 @@
 ### 目次：  
+・必要なファイルを作成＆記述
 ・LINE_NOTIFY_TOKENの発行  
 ・LINE_NOTIFY_CLIENT_SECRETのコピペ  
 ・LINE_NOTIFY_REDIRECT_URIの設定  
 
-# LINE_NOTIFY_TOKENの発行
-1. [LINE Notify](https://notify-bot.line.me/ja/)へアクセスし、ログイン
-2. マイページに移動し、[トークンを発行する]をクリック
-3. 個別トークンかグループトークンを選び、[発行する]をクリック
-4. トークンが画面に表示されるのでコピー
-5. 下記の通り必要なファイルの作成とコードを記述  
-
+# 必要なファイルを作成＆記述
 【.env】
 ```
-LINE_NOTIFY_TOKEN=発行したトークンを貼付
+# 一旦空白でOKです。後述する手順の中で追記していくことになります。
 ```
 【.gitignore】
 ```
 .env
 ```
-6.必要なgemの追加
 【GEMFILE】
 ```
 gem 'httparty'
@@ -31,6 +25,16 @@ end
 【コマンド】
 ```
 docker compose run web bundle
+```
+# LINE_NOTIFY_TOKENの発行
+1. [LINE Notify](https://notify-bot.line.me/ja/)へアクセスし、ログイン
+2. マイページに移動し、[トークンを発行する]をクリック
+3. 個別トークンかグループトークンを選び、[発行する]をクリック
+4. トークンが画面に表示されるのでコピー
+5. .envに追記  
+【.env】
+```
+LINE_NOTIFY_TOKEN=発行したトークンを貼付
 ```
 # LINE_NOTIFY_CLIENT_SECRETのコピペ
 1. [LINE Developers]([https://developers.line.biz/ja/](https://account.line.biz/login?redirectUri=https%3A%2F%2Fdevelopers.line.biz%2Fconsole%2F))へアクセスし、ログイン  
@@ -55,4 +59,5 @@ LINE_NOTIFY_CLIENT_SECRET=コピーしたチャネルシークレットを貼付
 ```
 LINE_NOTIFY_TOKEN=発行したトークンを貼付
 LINE_NOTIFY_CLIENT_SECRET=コピーしたチャネルシークレットを貼付
+LINE_NOTIFY_REDIRECT_URI=設定したURIを貼付
 ```
