@@ -3,6 +3,7 @@
 ・LINE_NOTIFY_TOKENの発行  
 ・LINE_NOTIFY_CLIENT_SECRETのコピペ  
 ・LINE_NOTIFY_REDIRECT_URIの設定  
+・LINE_NOTIFY_CLIENT_IDの発行とコピペ  
 
 # 必要なファイルを作成＆記述
 【.env】
@@ -60,4 +61,14 @@ LINE_NOTIFY_CLIENT_SECRET=コピーしたチャネルシークレットを貼付
 LINE_NOTIFY_TOKEN=発行したトークンを貼付
 LINE_NOTIFY_CLIENT_SECRET=コピーしたチャネルシークレットを貼付
 LINE_NOTIFY_REDIRECT_URI=設定したURIを貼付
+```
+
+・LINE_NOTIFY_CLIENT_IDの発行とコピペ
+
+【.env】
+```
+LINE_NOTIFY_TOKEN=発行したトークンを貼付
+LINE_NOTIFY_CLIENT_SECRET=コピーしたチャネルシークレットを貼付
+LINE_NOTIFY_REDIRECT_URI=設定したURIを貼付
+LINE_NOTIFY_CLIENT_ID=発行したClientID
 ```
