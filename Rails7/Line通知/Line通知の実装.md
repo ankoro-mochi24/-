@@ -1,6 +1,6 @@
 ### 目次：  
 ・必要なファイルを作成＆記述
-・LINE_NOTIFY_TOKENの発行  
+・LINE Notifyにサービスの登録  
 ・LINE_NOTIFY_CLIENT_SECRETのコピペ  
 ・LINE_NOTIFY_REDIRECT_URIの設定  
 ・LINE_NOTIFY_CLIENT_IDの発行とコピペ  
@@ -8,7 +8,9 @@
 # 必要なファイルを作成＆記述
 【.env】
 ```
-# 一旦空白でOKです。後述する手順の中で追記していくことになります。
+LINE_NOTIFY_CLIENT_ID=
+LINE_NOTIFY_CLIENT_SECRET=
+LINE_NOTIFY_REDIRECT_URI=
 ```
 【.gitignore】
 ```
@@ -27,20 +29,7 @@ end
 ```
 docker compose run web bundle
 ```
-# LINE_NOTIFY_TOKENの発行
-1. [LINE Notify](https://notify-bot.line.me/ja/)へアクセスし、ログイン
-2. マイページに移動し、[トークンを発行する]をクリック
-3. 個別トークンかグループトークンを選び、[発行する]をクリック
-4. トークンが画面に表示されるのでコピー
-5. .envに追記  
-【.env】
-```
-LINE_NOTIFY_TOKEN=発行したトークンを貼付
-```
-# LINE_NOTIFY_CLIENT_SECRETのコピペ
-# LINE_NOTIFY_CLIENT_IDの発行とコピペ  
-
-
+# LINE Notifyにサービスの登録
 1.[ngrok](https://dashboard.ngrok.com/get-started/setup/windows)にサインアップし、「Download for Windows (64-Bit)」をダウンロード  
 ※windowsセキュリティに引っかかる可能性があるので、その場合はリアルタイム保護を一時的に停止すれば解決する！必ず作業終了後に停止を解除すること！！  
 ![image](https://github.com/user-attachments/assets/a3e7cf70-e3a0-4b24-8e41-a8b012db8c65)
@@ -58,9 +47,9 @@ ngrok http 3000
 5.実行結果の「Forwarding」に表示される「https://...ngrok-free.app」の部分をコピー
 ![image](https://i.gyazo.com/ff760a93812f5ccff333c7f4cde832d7.png)
 
-6.[LINE Notifyのサービス登録画面](https://notify-bot.line.me/my/services/new)を開き、コピーしたURLを「サービスURL」の欄に貼り付け。そのほかの項目も埋めていき、同意して次に進む  
+6.[LINE Notifyのサービス登録画面](https://notify-bot.line.me/my/services/new)を開き、コピーしたURLを「サービスURL」の欄に貼り付け。コールバックURLは「http://localhost:3000/line_notify/callback」などとする。そのほかの項目も埋めていき、同意して次に進む  
 ※LINE Notifyのサービス登録画面の開き方：[LINE Notify](https://notify-bot.line.me/ja/)⇒[登録サービス管理](https://notify-bot.line.me/my/services/)⇒[サービスを登録する](https://notify-bot.line.me/my/services/new)
-![image](https://i.gyazo.com/12c9d6622c4800f00f660fa914d06094.png)
+![image](https://github.com/user-attachments/assets/21f66b9d-abdd-41ef-b163-3b857d8d672b)
 
 7.登録すると登録したメールアドレスに認証メールが届くので、認証を忘れないこと
 ![image](https://github.com/user-attachments/assets/f79abcb1-3dc8-4e56-b722-ff5804fbb892)
@@ -70,3 +59,6 @@ ngrok http 3000
 └Ctrl + Cを押す  
 └コンピュータを再起動する  
 ※※リアルタイム保護を一時的に停止していた場合は必ず作業終了後に停止を解除すること！！※※
+
+# LINE_NOTIFY_CLIENT_SECRETのコピペ
+# LINE_NOTIFY_CLIENT_IDの発行とコピペ  
